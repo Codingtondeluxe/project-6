@@ -43,7 +43,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/getWordsStargingWith/{value}")
-    public List<Entry> getWordsStargingWith(@PathVariable("value") String value) throws WordNotFoundException {
+    public List<Entry> getWordsStargingWith(@PathVariable("value") String value) {
 
         StopWatch sw = new StopWatch();
         sw.start();
@@ -65,7 +65,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/getWordsThatContain/{value}")
-    public List<Entry> getWordsThatContain(@PathVariable("value") String value) throws WordNotFoundException {
+    public List<Entry> getWordsThatContain(@PathVariable("value") String value) {
 
         StopWatch sw = new StopWatch();
         sw.start();
@@ -76,6 +76,28 @@ public class DictionaryController {
         String message = new StringBuilder().append("Retrieved entry for words that contain [")
                 .append(value)
                 .append("] containing ")
+                .append(entry.size())
+                .append(" entries in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+
+        logger.info(message);
+        return entry;
+    }
+
+    @GetMapping("/getWordsThatContainConsecutiveLetters")
+    public List<Entry> getWordsThatContainConsecutiveLetters() {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+        List<Entry> entry =  this.dictionaryService.getWordsThatContainConsecutiveDoubleLetters();
+        sw.stop();
+
+        long nanoSeconds = sw.getLastTaskTimeNanos();
+        String message = new StringBuilder().append("Retrieved entry for words containing")
+                .append(" consecutive double letters, ")
+                .append("containing ")
                 .append(entry.size())
                 .append(" entries in ")
                 .append(nanoSeconds / 1000000.0)
