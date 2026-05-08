@@ -42,8 +42,8 @@ public class DictionaryController {
         return entry;
     }
 
-    @GetMapping("/getWordsStargingWith/{value}")
-    public List<Entry> getWordsStargingWith(@PathVariable("value") String value) {
+    @GetMapping("/getWordsStartingWith/{value}")
+    public List<Entry> getWordsStartingWith(@PathVariable("value") String value) {
 
         StopWatch sw = new StopWatch();
         sw.start();
